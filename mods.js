@@ -63,15 +63,15 @@ mods.get("/", (req, res) => {
 });
 
 mods.get('/cart-items', (req, res) => {
-    res.json({products});
+    res.json({ products });
     res.sendStatus(200);
 })
 
 mods.get("/cart-items/:id", (req, res) => {
-    const product = products.find((item)=>item.id === parseInt(req.params.id));
-    if(product){
+    const product = products.find((item) => item.id === parseInt(req.params.id));
+    if (product) {
         res.json(product);
-    }else{
+    } else {
         res.json("ID Not Found")
         res.sendStatus(404);
     }
@@ -79,28 +79,26 @@ mods.get("/cart-items/:id", (req, res) => {
 })
 
 mods.post("/cart-items", (req, res) => {
-    if(req.body && req.body.product && req.body.price && req.body.quantity)
-    {
-        products.push({product:req.body.product, price:req.body.price, quantity:req.body.quantity, id:products.length+1});
+    if (req.body && req.body.product && req.body.price && req.body.quantity) {
+        products.push({ product: req.body.product, price: req.body.price, quantity: req.body.quantity, id: products.length + 1 });
         res.sendStatus(201);
-    }else
-    {
+    } else {
         res.json('something broke...');
     }
 })
 
 mods.put("/cart-items/:id", (req, res) => {
-    const spot = products.findIndex((item)=>item.id === parseInt(req.params.id));
-    const spooki = products.find((item)=>item.id === parseInt(req.params.id));
+    const spot = products.findIndex((item) => item.id === parseInt(req.params.id));
+    const spooki = products.find((item) => item.id === parseInt(req.params.id));
     spooki.product = req.body.product;
     spooki.price = req.body.price;
     spooki.quantity = req.body.quantity;
     res.sendStatus(200);
 })
 
-    
+
 mods.delete("/cart-items/:id", (req, res) => {
-    const spot = products.findIndex((item)=>item.id === parseInt(req.params.id));
+    const spot = products.findIndex((item) => item.id === parseInt(req.params.id));
     products.splice(spot, 1);
     res.sendStatus(204);
 })
